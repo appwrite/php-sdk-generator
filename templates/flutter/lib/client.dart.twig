@@ -2,6 +2,7 @@ part of {{ language.params.packageName }};
 
 class Client {
     String endPoint;
+    String? endPointRealtime;
     String type = 'unknown';
     Map<String, String>? headers;
     late Map<String, String> config;
@@ -64,8 +65,16 @@ class Client {
 
     Client setEndpoint(String endPoint) {
         this.endPoint = endPoint;
+        endPointRealtime = endPoint
+            .replaceFirst('https://', 'wss://')
+            .replaceFirst('http://', 'ws://');
         this.http.options.baseUrl = this.endPoint;
         return this;
+    }
+
+    Client setEndPointRealtime(String endPointRealtime) {
+      endPointRealtime = endPoint;
+      return this;
     }
 
     Client addHeader(String key, String value) {
