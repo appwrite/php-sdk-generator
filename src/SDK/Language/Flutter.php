@@ -5,6 +5,37 @@ namespace Appwrite\SDK\Language;
 class Flutter extends Dart {
 
     /**
+     * @param $type
+     * @return string
+     */
+    public function getTypeName($type)
+    {
+        switch ($type) {
+            case self::TYPE_INTEGER:
+                return 'int';
+            break;
+            case self::TYPE_STRING:
+                return 'String';
+            break;
+            case self::TYPE_FILE:
+                return 'FileInput';
+            break;
+            case self::TYPE_BOOLEAN:
+                return 'bool';
+            break;
+            case self::TYPE_ARRAY:
+            	return 'List';
+			case self::TYPE_OBJECT:
+				return 'Map';
+            case self::TYPE_NUMBER:
+                return 'double';
+            break;
+        }
+
+        return $type;
+    }
+
+    /**
      * @var array
      */
     protected $params = [
@@ -87,6 +118,12 @@ class Flutter extends Dart {
 			],
             [
 				'scope'         => 'default',
+				'destination'   => '/lib/file_input.dart',
+				'template'      => 'flutter/lib/file_input.dart.twig',
+				'minify'        => false,
+			],
+            [
+				'scope'         => 'default',
 				'destination'   => '/lib/exception.dart',
 				'template'      => 'flutter/lib/exception.dart.twig',
 				'minify'        => false,
@@ -95,6 +132,12 @@ class Flutter extends Dart {
                 'scope'         => 'service',
                 'destination'   => '/lib/services/{{service.name | caseDash}}.dart',
                 'template'      => 'flutter/lib/services/service.dart.twig',
+                'minify'        => false,
+            ],
+            [
+                'scope'         => 'definition',
+                'destination'   => '/lib/models/{{definition.name | caseSnake }}.dart',
+                'template'      => '/flutter/lib/models/model.dart.twig',
                 'minify'        => false,
             ],
             [
